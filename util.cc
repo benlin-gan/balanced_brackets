@@ -185,12 +185,22 @@ unsigned dynamic_programming(std::string s){
 	return max_size;
 }
 
-
-
 char random_bracket(std::mt19937& gen){
 	std::uniform_int_distribution<> distrib(0, 3);
 	char v[4] = {'(', '[', ']', ')'};
 	return v[distrib(gen)];
+}
+std::string perfectly_balanced(int n){
+	n = (n / 2) * 2;
+	std::vector<char> v(n);
+	for(int i = 0; i < n/2; i++){
+		v[i] = '(';	
+	}
+	for(int i = n/2; i < n; i++){
+		v[i] = ')';
+	}
+	std::string s(v.begin(), v.end());
+	return s;
 }
 int main(int argc, char** argv){
 	std::mt19937 gen;
@@ -205,7 +215,8 @@ int main(int argc, char** argv){
 	}
     auto start{std::chrono::steady_clock::now()};
    	auto end{std::chrono::steady_clock::now()};
-	std::string s(v.begin(), v.end());
+	//std::string s(v.begin(), v.end());
+	std::string s = perfectly_balanced(n);
 	//brute force
 	/*start = std::chrono::steady_clock::now();
 	std::cout << brute_force(s);
@@ -213,7 +224,7 @@ int main(int argc, char** argv){
 	std::chrono::duration<double> bf{end - start};
 	std::cout << ' ' << bf.count() << '\n';*/
 	//scan_left
-	start = std::chrono::steady_clock::now();
+	/*start = std::chrono::steady_clock::now();
 	std::cout << scan_left(s);
 	end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> sl{end - start};
@@ -223,7 +234,7 @@ int main(int argc, char** argv){
 	std::cout << basic_recursion(s);
 	end = std::chrono::steady_clock::now();
 	std::chrono::duration<double> br{end - start};
-	std::cout << ' ' << br.count() << '\n';
+	std::cout << ' ' << br.count() << '\n';*/
 	//dp
 	start = std::chrono::steady_clock::now();
 	std::cout << dynamic_programming(s);
